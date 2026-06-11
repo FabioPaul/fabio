@@ -4,9 +4,15 @@
 (function () {
   'use strict';
 
-  var WHATSAPP = '595985903081';
   var CART_KEY = 'tiendanova_cart';
+  var ORDER_KEY = 'tiendanova_last_order';
   var SHIPPING = 25000;
+
+  var PAYMENT_LABELS = {
+    card: 'Tarjeta de crédito / débito',
+    cash: 'Efectivo contra entrega',
+    transfer: 'Transferencia bancaria'
+  };
 
   var PRODUCTS = [
     { id: 1, name: 'Auriculares Bluetooth Pro', category: 'Electrónica', price: 189000, oldPrice: 249000, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop', description: 'Sonido premium con cancelación de ruido activa. Batería de 30 horas y estuche de carga rápida.', featured: true },
@@ -209,11 +215,49 @@
     setTimeout(function () { toast.remove(); }, 2000);
   }
 
+  function getCartTotals() {
+    var subtotal = 0;
+    var items = [];
+
+    cart.forEach(function (item) {
+      var product = getProduct(item.id);
+      if (!product) return;
+      var lineTotal = product.price * item.qty;
+      subtotal += lineTotal;
+      items.push({ product: product, qty: item.qty, lineTotal: lineTotal });
+    });
+
+    return {
+      items: items,
+      subtotal: subtotal,
+      shipping: SHIPPING,
+      total: subtotal + SHIPPING
+    };
+  }
+
+  function updateCartSummary(totals) {
+    var subEl = document.getElementById('subtotalAmount');
+    var shipEl = document.getElementById('shippingAmount');
+    var totalEl = document.getElementById('totalAmount');
+    if (subEl) subEl.textContent = formatPrice(totals.subtotal);
+    if (shipEl) shipEl.textContent = formatPrice(totals.shipping);
+    if (totalEl) totalEl.textContent = formatPrice(totals.total);
+  }
+
+  function updateCheckoutSummary(totals) {
+    var subEl = document.getElementById('checkoutSubtotal');
+    var shipEl = document.getElementById('checkoutShipping');
+    var totalEl = document.getElementById('checkoutTotal');
+    if (subEl) subEl.textContent = formatPrice(totals.subtotal);
+    if (shipEl) shipEl.textContent = formatPrice(totals.shipping);
+    if (totalEl) totalEl.textContent = formatPrice(totals.total);
+  }
+
   function renderCart() {
     var itemsEl = document.getElementById('cartItems');
     var emptyEl = document.getElementById('emptyCart');
     var summaryEl = document.getElementById('cartSummary');
-    var btnCheckout = document.getElementById('btnCheckout');
+    var btnGoCheckout = document.getElementById('btnGoCheckout');
     if (!itemsEl) return;
 
     if (cart.length === 0) {
@@ -226,37 +270,59 @@
     emptyEl?.classList.add('d-none');
     summaryEl?.classList.remove('d-none');
 
-    var subtotal = 0;
-    itemsEl.innerHTML = cart.map(function (item) {
-      var product = getProduct(item.id);
-      if (!product) return '';
-      var lineTotal = product.price * item.qty;
-      subtotal += lineTotal;
+    var totals = getCartTotals();
+    itemsEl.innerHTML = totals.items.map(function (entry) {
+      var product = entry.product;
       return (
-        '<div class="cart-item" data-cart-id="' + item.id + '">' +
+        '<div class="cart-item" data-cart-id="' + product.id + '">' +
           '<img src="' + product.image + '" alt="' + product.name + '" class="cart-item-img">' +
           '<div class="cart-item-info">' +
             '<div class="cart-item-title">' + product.name + '</div>' +
             '<div class="text-muted small">' + formatPrice(product.price) + ' c/u</div>' +
-            '<div class="cart-item-price mt-1">' + formatPrice(lineTotal) + '</div>' +
+            '<div class="cart-item-price mt-1">' + formatPrice(entry.lineTotal) + '</div>' +
           '</div>' +
           '<div class="qty-control">' +
-            '<button type="button" data-cart-qty="minus" data-id="' + item.id + '">−</button>' +
-            '<span>' + item.qty + '</span>' +
-            '<button type="button" data-cart-qty="plus" data-id="' + item.id + '">+</button>' +
+            '<button type="button" data-cart-qty="minus" data-id="' + product.id + '">−</button>' +
+            '<span>' + entry.qty + '</span>' +
+            '<button type="button" data-cart-qty="plus" data-id="' + product.id + '">+</button>' +
           '</div>' +
-          '<button class="btn btn-outline-danger btn-sm" data-cart-remove="' + item.id + '">' +
+          '<button class="btn btn-outline-danger btn-sm" data-cart-remove="' + product.id + '">' +
             '<i class="bi bi-trash"></i>' +
           '</button>' +
         '</div>'
       );
     }).join('');
 
-    var total = subtotal + SHIPPING;
-    document.getElementById('subtotalAmount').textContent = formatPrice(subtotal);
-    document.getElementById('shippingAmount').textContent = formatPrice(SHIPPING);
-    document.getElementById('totalAmount').textContent = formatPrice(total);
-    if (btnCheckout) btnCheckout.disabled = false;
+    updateCartSummary(totals);
+    if (btnGoCheckout) btnGoCheckout.disabled = false;
+  }
+
+  function renderCheckout() {
+    if (cart.length === 0) {
+      navigate('carrito');
+      window.location.hash = 'carrito';
+      return;
+    }
+
+    var totals = getCartTotals();
+    var listEl = document.getElementById('checkoutItems');
+    if (listEl) {
+      listEl.innerHTML = totals.items.map(function (entry) {
+        var product = entry.product;
+        return (
+          '<div class="checkout-item">' +
+            '<img src="' + product.image + '" alt="' + product.name + '">' +
+            '<div class="checkout-item-info">' +
+              '<div class="checkout-item-name">' + product.name + '</div>' +
+              '<div class="checkout-item-meta">' + entry.qty + ' x ' + formatPrice(product.price) + '</div>' +
+            '</div>' +
+            '<strong>' + formatPrice(entry.lineTotal) + '</strong>' +
+          '</div>'
+        );
+      }).join('');
+    }
+
+    updateCheckoutSummary(totals);
   }
 
   function updateCartQty(id, delta) {
@@ -266,30 +332,269 @@
     if (item.qty <= 0) cart = cart.filter(function (i) { return i.id !== id; });
     saveCart();
     renderCart();
+    if (currentView === 'checkout') renderCheckout();
   }
 
-  function buildWhatsAppMessage() {
-    var lines = ['Hola! Quiero realizar el siguiente pedido:\n'];
-    var subtotal = 0;
+  function getCheckoutData() {
+    var payment = document.querySelector('input[name="paymentMethod"]:checked');
+    var method = payment ? payment.value : 'cash';
+    return {
+      name: document.getElementById('checkoutName').value.trim(),
+      phone: document.getElementById('checkoutPhone').value.trim(),
+      email: document.getElementById('checkoutEmail').value.trim(),
+      address: document.getElementById('checkoutAddress').value.trim(),
+      city: document.getElementById('checkoutCity').value.trim(),
+      ref: document.getElementById('checkoutRef').value.trim(),
+      notes: document.getElementById('checkoutNotes').value.trim(),
+      paymentMethod: method,
+      paymentLabel: PAYMENT_LABELS[method] || method,
+      cardNumber: document.getElementById('cardNumber')?.value.replace(/\s/g, '') || '',
+      cardName: document.getElementById('cardName')?.value.trim() || '',
+      cardExpiry: document.getElementById('cardExpiry')?.value.trim() || '',
+      cardCvv: document.getElementById('cardCvv')?.value.trim() || ''
+    };
+  }
 
-    cart.forEach(function (item) {
-      var product = getProduct(item.id);
-      if (!product) return;
-      var lineTotal = product.price * item.qty;
-      subtotal += lineTotal;
-      lines.push('• ' + product.name);
-      lines.push('  Cantidad: ' + item.qty);
-      lines.push('  Precio unitario: ' + formatPrice(product.price));
-      lines.push('  Subtotal: ' + formatPrice(lineTotal) + '\n');
-    });
+  function isCardPayment() {
+    var payment = document.querySelector('input[name="paymentMethod"]:checked');
+    return payment && payment.value === 'card';
+  }
 
-    var total = subtotal + SHIPPING;
-    lines.push('---');
-    lines.push('Subtotal: ' + formatPrice(subtotal));
-    lines.push('Envío: ' + formatPrice(SHIPPING));
-    lines.push('*Total: ' + formatPrice(total) + '*');
+  function formatCardNumber(value) {
+    var digits = value.replace(/\D/g, '').slice(0, 16);
+    return digits.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+  }
 
-    return lines.join('\n');
+  function formatCardExpiry(value) {
+    var digits = value.replace(/\D/g, '').slice(0, 4);
+    if (digits.length >= 3) return digits.slice(0, 2) + '/' + digits.slice(2);
+    return digits;
+  }
+
+  function updateCardPreview() {
+    var number = document.getElementById('cardNumber')?.value || '•••• •••• •••• ••••';
+    var name = document.getElementById('cardName')?.value.trim() || 'NOMBRE APELLIDO';
+    var expiry = document.getElementById('cardExpiry')?.value.trim() || 'MM/AA';
+    var numEl = document.getElementById('cardPreviewNumber');
+    var nameEl = document.getElementById('cardPreviewName');
+    var expEl = document.getElementById('cardPreviewExpiry');
+    if (numEl) numEl.textContent = number || '•••• •••• •••• ••••';
+    if (nameEl) nameEl.textContent = name.toUpperCase();
+    if (expEl) expEl.textContent = expiry || 'MM/AA';
+  }
+
+  function togglePaymentFields() {
+    var cardFields = document.getElementById('cardPaymentFields');
+    var btnText = document.getElementById('btnConfirmText');
+    var isCard = isCardPayment();
+    if (cardFields) cardFields.classList.toggle('d-none', !isCard);
+    if (btnText) {
+      btnText.textContent = isCard ? 'Pagar con tarjeta y confirmar' : 'Confirmar pedido';
+    }
+  }
+
+  function validateCard(data) {
+    if (!isCardPayment()) return true;
+    if (data.cardNumber.length !== 16) {
+      showToast('Ingresá un número de tarjeta válido (16 dígitos)');
+      return false;
+    }
+    if (!data.cardName) {
+      showToast('Ingresá el nombre en la tarjeta');
+      return false;
+    }
+    if (!/^\d{2}\/\d{2}$/.test(data.cardExpiry)) {
+      showToast('Ingresá una fecha de vencimiento válida (MM/AA)');
+      return false;
+    }
+    if (data.cardCvv.length < 3) {
+      showToast('Ingresá el CVV de la tarjeta');
+      return false;
+    }
+    return true;
+  }
+
+  function generateOrderRef() {
+    var now = new Date();
+    var code = 'TN-' + now.getFullYear().toString().slice(-2) +
+      String(now.getMonth() + 1).padStart(2, '0') +
+      String(now.getDate()).padStart(2, '0') + '-' +
+      String(Math.floor(Math.random() * 9000) + 1000);
+    return code;
+  }
+
+  function showPaymentOverlay(show, title, text) {
+    var overlay = document.getElementById('paymentOverlay');
+    if (!overlay) return;
+    overlay.classList.toggle('d-none', !show);
+    overlay.setAttribute('aria-hidden', show ? 'false' : 'true');
+    if (title) document.getElementById('overlayTitle').textContent = title;
+    if (text) document.getElementById('overlayText').textContent = text;
+  }
+
+  function buildOrder(customer) {
+    var totals = getCartTotals();
+    var now = new Date();
+    return {
+      orderRef: customer.orderRef,
+      date: now.toLocaleString('es-PY', {
+        day: '2-digit', month: 'long', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      }),
+      status: 'Confirmado',
+      customer: {
+        name: customer.name,
+        phone: customer.phone,
+        email: customer.email,
+        address: customer.address,
+        city: customer.city,
+        ref: customer.ref,
+        notes: customer.notes
+      },
+      payment: {
+        method: customer.paymentMethod,
+        label: customer.paymentLabel,
+        cardLast4: customer.paymentMethod === 'card' ? customer.cardNumber.slice(-4) : null
+      },
+      items: totals.items.map(function (entry) {
+        return {
+          id: entry.product.id,
+          name: entry.product.name,
+          qty: entry.qty,
+          price: entry.product.price,
+          lineTotal: entry.lineTotal,
+          image: entry.product.image
+        };
+      }),
+      subtotal: totals.subtotal,
+      shipping: totals.shipping,
+      total: totals.total
+    };
+  }
+
+  function saveOrder(order) {
+    localStorage.setItem(ORDER_KEY, JSON.stringify(order));
+  }
+
+  function loadLastOrder() {
+    try {
+      return JSON.parse(localStorage.getItem(ORDER_KEY));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function renderOrderReceipt() {
+    var order = loadLastOrder();
+    var el = document.getElementById('orderReceipt');
+    var msgEl = document.getElementById('confirmationMessage');
+    if (!order || !el) return;
+
+    var paymentInfo = order.payment.label;
+    if (order.payment.cardLast4) {
+      paymentInfo += ' · **** ' + order.payment.cardLast4;
+    }
+
+    if (msgEl) {
+      msgEl.textContent = order.payment.method === 'card'
+        ? 'Tu pago fue procesado correctamente. Recibirás un email con los detalles del envío.'
+        : 'Tu orden fue registrada. Te contactaremos para coordinar el pago y la entrega.';
+    }
+
+    var itemsHTML = order.items.map(function (item) {
+      return (
+        '<tr>' +
+          '<td><strong>' + item.name + '</strong></td>' +
+          '<td class="text-center">' + item.qty + '</td>' +
+          '<td class="text-end">' + formatPrice(item.price) + '</td>' +
+          '<td class="text-end fw-semibold">' + formatPrice(item.lineTotal) + '</td>' +
+        '</tr>'
+      );
+    }).join('');
+
+    var totalLabel = order.payment.method === 'card' ? 'Total pagado' : 'Total a pagar';
+
+    el.innerHTML = (
+      '<div class="order-receipt-header">' +
+        '<div>' +
+          '<h2>Orden de compra</h2>' +
+          '<p class="mb-0 opacity-75 small">TiendaNova</p>' +
+        '</div>' +
+        '<div class="text-end">' +
+          '<span class="order-status-badge"><i class="bi bi-check-circle-fill"></i> ' + order.status + '</span>' +
+          '<p class="mb-0 mt-2 fw-bold">' + order.orderRef + '</p>' +
+          '<p class="mb-0 small opacity-75">' + order.date + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="order-receipt-body">' +
+        '<div class="row g-4">' +
+          '<div class="col-md-6">' +
+            '<div class="order-receipt-section">' +
+              '<h3>Cliente</h3>' +
+              '<div class="order-receipt-row"><span>' + order.customer.name + '</span></div>' +
+              '<div class="order-receipt-row"><span class="text-muted">' + order.customer.phone + '</span></div>' +
+              (order.customer.email ? '<div class="order-receipt-row"><span class="text-muted">' + order.customer.email + '</span></div>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div class="col-md-6">' +
+            '<div class="order-receipt-section">' +
+              '<h3>Entrega</h3>' +
+              '<div class="order-receipt-row"><span>' + order.customer.address + '</span></div>' +
+              '<div class="order-receipt-row"><span class="text-muted">' + order.customer.city + '</span></div>' +
+              (order.customer.ref ? '<div class="order-receipt-row"><span class="text-muted">Ref: ' + order.customer.ref + '</span></div>' : '') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="order-receipt-section">' +
+          '<h3>Productos</h3>' +
+          '<div class="table-responsive">' +
+            '<table class="order-receipt-table">' +
+              '<thead><tr><th>Producto</th><th class="text-center">Cant.</th><th class="text-end">Precio</th><th class="text-end">Subtotal</th></tr></thead>' +
+              '<tbody>' + itemsHTML + '</tbody>' +
+            '</table>' +
+          '</div>' +
+        '</div>' +
+        '<div class="order-receipt-section">' +
+          '<h3>Pago</h3>' +
+          '<div class="order-receipt-row"><span>Método</span><span>' + paymentInfo + '</span></div>' +
+          (order.customer.notes ? '<div class="order-receipt-row mt-2"><span class="text-muted">Notas: ' + order.customer.notes + '</span></div>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="order-receipt-total">' +
+        '<div class="order-receipt-row"><span class="text-muted">Subtotal</span><span>' + formatPrice(order.subtotal) + '</span></div>' +
+        '<div class="order-receipt-row"><span class="text-muted">Envío</span><span>' + formatPrice(order.shipping) + '</span></div>' +
+        '<div class="order-receipt-row fw-bold fs-5 mt-2"><span>' + totalLabel + '</span><span class="text-primary">' + formatPrice(order.total) + '</span></div>' +
+      '</div>'
+    );
+  }
+
+  function simulateOrder(customer, onComplete) {
+    var steps = customer.paymentMethod === 'card'
+      ? [
+          { title: 'Procesando pago...', text: 'Verificando datos de la tarjeta', delay: 1200 },
+          { title: 'Autorizando transacción...', text: 'Conectando con el banco emisor', delay: 1500 },
+          { title: '¡Pago aprobado!', text: 'Generando orden de compra', delay: 800 }
+        ]
+      : [
+          { title: 'Registrando pedido...', text: 'Validando información de entrega', delay: 1000 },
+          { title: 'Confirmando orden...', text: 'Preparando comprobante', delay: 1200 }
+        ];
+
+    var stepIndex = 0;
+
+    function runStep() {
+      if (stepIndex >= steps.length) {
+        showPaymentOverlay(false);
+        onComplete();
+        return;
+      }
+      var step = steps[stepIndex];
+      showPaymentOverlay(true, step.title, step.text);
+      stepIndex += 1;
+      setTimeout(runStep, step.delay);
+    }
+
+    runStep();
   }
 
   function navigate(view, productId) {
@@ -307,6 +612,11 @@
     if (view === 'catalogo') renderCatalog();
     if (view === 'detalle' && productId) renderDetail(productId);
     if (view === 'carrito') renderCart();
+    if (view === 'checkout') {
+      renderCheckout();
+      togglePaymentFields();
+    }
+    if (view === 'confirmacion') renderOrderReceipt();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -377,10 +687,70 @@
   document.getElementById('categoryFilter')?.addEventListener('change', renderCatalog);
   document.getElementById('sortFilter')?.addEventListener('change', renderCatalog);
 
-  document.getElementById('btnCheckout')?.addEventListener('click', function () {
+  document.getElementById('btnGoCheckout')?.addEventListener('click', function () {
     if (cart.length === 0) return;
-    var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(buildWhatsAppMessage());
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.location.hash = 'checkout';
+    navigate('checkout');
+  });
+
+  document.getElementById('btnBackCart')?.addEventListener('click', function () {
+    window.location.hash = 'carrito';
+    navigate('carrito');
+  });
+
+  document.getElementById('checkoutForm')?.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (cart.length === 0) {
+      showToast('Tu carrito está vacío');
+      navigate('carrito');
+      return;
+    }
+
+    var customer = getCheckoutData();
+    if (!customer.name || !customer.phone || !customer.address || !customer.city) {
+      showToast('Completá los campos obligatorios');
+      return;
+    }
+
+    if (!validateCard(customer)) return;
+
+    var btnConfirm = document.getElementById('btnConfirmOrder');
+    if (btnConfirm) btnConfirm.disabled = true;
+
+    customer.orderRef = generateOrderRef();
+    var orderSnapshot = buildOrder(customer);
+
+    simulateOrder(customer, function () {
+      saveOrder(orderSnapshot);
+      cart = [];
+      saveCart();
+
+      if (btnConfirm) btnConfirm.disabled = false;
+      window.location.hash = 'confirmacion';
+      navigate('confirmacion');
+    });
+  });
+
+  document.querySelectorAll('input[name="paymentMethod"]').forEach(function (radio) {
+    radio.addEventListener('change', togglePaymentFields);
+  });
+
+  document.getElementById('cardNumber')?.addEventListener('input', function () {
+    this.value = formatCardNumber(this.value);
+    updateCardPreview();
+  });
+  document.getElementById('cardName')?.addEventListener('input', updateCardPreview);
+  document.getElementById('cardExpiry')?.addEventListener('input', function () {
+    this.value = formatCardExpiry(this.value);
+    updateCardPreview();
+  });
+  document.getElementById('cardCvv')?.addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 4);
+  });
+
+  document.getElementById('btnPrintOrder')?.addEventListener('click', function () {
+    window.print();
   });
 
   document.getElementById('btnClearCart')?.addEventListener('click', function () {
@@ -397,5 +767,6 @@
   initCategories();
   renderFeatured();
   updateCartBadge();
+  togglePaymentFields();
   parseHash();
 })();
