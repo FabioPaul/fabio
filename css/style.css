@@ -532,6 +532,66 @@ body {
   border: 1px solid var(--color-border);
 }
 
+/* --- Demos --- */
+.demo-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.demo-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.demo-card-preview {
+  position: relative;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.demo-preview-ecommerce { background: linear-gradient(135deg, #3483fa, #00a650); }
+.demo-preview-restaurant { background: linear-gradient(135deg, #c9a227, #8b4513); }
+.demo-preview-catalog { background: linear-gradient(135deg, #7c3aed, #25d366); }
+
+.demo-live-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--color-success);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.demo-card-body {
+  padding: 1.5rem;
+}
+
+.demo-card-body h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.demo-card-body p {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 1rem;
+}
+
 /* --- Proceso --- */
 .process-timeline {
   display: grid;

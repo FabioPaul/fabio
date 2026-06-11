@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Demo Ecommerce — Tienda online funcional con carrito y checkout por WhatsApp.">
+  <title>TiendaNova | Demo Ecommerce</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#inicio" data-nav="inicio">
+        <i class="bi bi-bag-heart-fill text-primary me-1"></i>TiendaNova
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#inicio" data-nav="inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#catalogo" data-nav="catalogo">Productos</a></li>
+          <li class="nav-item">
+            <button class="btn btn-outline-primary btn-sm position-relative ms-lg-2" id="btnCart" data-nav="carrito">
+              <i class="bi bi-cart3"></i>
+              <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Vista: Inicio -->
+  <section id="view-inicio" class="view active">
+    <div class="hero-shop">
+      <div class="container">
+        <div class="row align-items-center min-vh-75 py-5">
+          <div class="col-lg-6">
+            <span class="badge bg-primary-subtle text-primary mb-3">Demo Ecommerce</span>
+            <h1 class="display-5 fw-bold mb-3">Comprá online con la mejor experiencia</h1>
+            <p class="lead text-muted mb-4">
+              Productos seleccionados, envío rápido y checkout directo por WhatsApp.
+              Una tienda moderna lista para tu negocio.
+            </p>
+            <a href="#catalogo" class="btn btn-primary btn-lg me-2" data-nav="catalogo">
+              <i class="bi bi-grid me-2"></i>Ver productos
+            </a>
+            <a href="#catalogo" class="btn btn-outline-dark btn-lg" data-nav="catalogo">Ofertas del día</a>
+          </div>
+          <div class="col-lg-6 text-center mt-4 mt-lg-0">
+            <div class="hero-promo-card">
+              <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&h=500&fit=crop" alt="Ofertas" class="img-fluid rounded-4 shadow">
+              <div class="promo-tag">Hasta 30% OFF</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <h2 class="h3 fw-bold mb-1">Destacados</h2>
+          <p class="text-muted mb-0">Los productos más populares de la tienda</p>
+        </div>
+        <a href="#catalogo" class="btn btn-link text-decoration-none" data-nav="catalogo">Ver todos <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="row g-4" id="featuredProducts"></div>
+    </div>
+
+    <div class="bg-light py-5">
+      <div class="container">
+        <div class="row g-4 text-center">
+          <div class="col-md-4">
+            <div class="feature-box">
+              <i class="bi bi-truck text-primary"></i>
+              <h3>Envío rápido</h3>
+              <p class="text-muted mb-0">Entrega en 24-48 hs en zonas urbanas</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-box">
+              <i class="bi bi-shield-check text-primary"></i>
+              <h3>Compra segura</h3>
+              <p class="text-muted mb-0">Pagá con confianza al finalizar por WhatsApp</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-box">
+              <i class="bi bi-arrow-repeat text-primary"></i>
+              <h3>Devolución fácil</h3>
+              <p class="text-muted mb-0">30 días para cambios sin complicaciones</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vista: Catálogo -->
+  <section id="view-catalogo" class="view">
+    <div class="container py-4 py-lg-5">
+      <div class="catalog-header mb-4">
+        <h1 class="h2 fw-bold">Catálogo de productos</h1>
+        <p class="text-muted">Encontrá lo que buscás con filtros y búsqueda en tiempo real</p>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-md-6 col-lg-5">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input type="search" class="form-control" id="searchInput" placeholder="Buscar productos...">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <select class="form-select" id="categoryFilter">
+            <option value="">Todas las categorías</option>
+          </select>
+        </div>
+        <div class="col-lg-3">
+          <select class="form-select" id="sortFilter">
+            <option value="default">Ordenar por</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="text-muted small mb-3" id="resultsCount"></p>
+      <div class="row g-4" id="productsGrid"></div>
+      <div class="text-center py-5 d-none" id="noResults">
+        <i class="bi bi-search display-4 text-muted"></i>
+        <p class="mt-3 text-muted">No se encontraron productos con esos filtros.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vista: Detalle -->
+  <section id="view-detalle" class="view">
+    <div class="container py-4 py-lg-5" id="productDetail"></div>
+  </section>
+
+  <!-- Vista: Carrito -->
+  <section id="view-carrito" class="view">
+    <div class="container py-4 py-lg-5">
+      <h1 class="h2 fw-bold mb-4"><i class="bi bi-cart3 me-2"></i>Mi carrito</h1>
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div id="cartItems"></div>
+          <div class="text-center py-5 d-none" id="emptyCart">
+            <i class="bi bi-cart-x display-3 text-muted"></i>
+            <p class="mt-3 text-muted">Tu carrito está vacío</p>
+            <a href="#catalogo" class="btn btn-primary" data-nav="catalogo">Ir a productos</a>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="cart-summary" id="cartSummary">
+            <h3 class="h5 fw-bold mb-3">Resumen del pedido</h3>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Subtotal</span>
+              <span id="subtotalAmount">Gs. 0</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Envío</span>
+              <span id="shippingAmount">Gs. 25.000</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between fw-bold fs-5 mb-4">
+              <span>Total</span>
+              <span class="text-primary" id="totalAmount">Gs. 0</span>
+            </div>
+            <button class="btn btn-success btn-lg w-100" id="btnCheckout" disabled>
+              <i class="bi bi-whatsapp me-2"></i>Finalizar pedido por WhatsApp
+            </button>
+            <button class="btn btn-outline-danger btn-sm w-100 mt-2" id="btnClearCart">
+              Vaciar carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="shop-footer">
+    <div class="container text-center">
+      <p class="mb-1"><strong>TiendaNova</strong> — Demo Ecommerce por <a href="../../index.html">Fabio Areco</a></p>
+      <p class="text-muted small mb-0">Proyecto demostrativo · Sin backend · Datos ficticios</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+:root {
+  --primary: #7c3aed;
+  --primary-light: #a78bfa;
+  --whatsapp: #25d366;
+  --whatsapp-dark: #1da851;
+  --text: #1e1b2e;
+  --muted: #6b7280;
+  --bg: #f9fafb;
+  --radius: 16px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Header */
+.catalog-header {
+  background: linear-gradient(160deg, #7c3aed 0%, #5b21b6 50%, #4c1d95 100%);
+  color: #fff;
+}
+.back-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.back-link:hover { color: #fff; }
+.demo-badge {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.store-avatar {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+}
+.store-name {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.store-desc {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.25rem;
+}
+.btn-whatsapp {
+  background: var(--whatsapp);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn-whatsapp:hover {
+  background: var(--whatsapp-dark);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Filters */
+.sticky-filters {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  padding: 1rem 0;
+  margin: 0 -0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.form-control, .form-select {
+  border-radius: 10px;
+  border-color: #e5e7eb;
+}
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pill {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 0.35rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pill:hover, .pill.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* Product card */
+.catalog-card {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s, box-shadow 0.25s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.catalog-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+.catalog-card-img {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+.catalog-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.btn-fav {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #d1d5db;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.btn-fav:hover, .btn-fav.active {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+.btn-fav.active { background: #fff; }
+.catalog-card-body {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.catalog-category {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  font-weight: 600;
+}
+.catalog-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.25rem 0;
+  line-height: 1.35;
+}
+.catalog-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+.catalog-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.catalog-actions .btn { flex: 1; font-size: 0.8rem; border-radius: 10px; }
+.btn-consult {
+  background: var(--whatsapp);
+  border-color: var(--whatsapp);
+  color: #fff;
+}
+.btn-consult:hover {
+  background: var(--whatsapp-dark);
+  border-color: var(--whatsapp-dark);
+  color: #fff;
+}
+
+/* Quick view modal */
+.quick-view-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 280px;
+}
+.quick-view-body { padding: 1.5rem; }
+
+/* Footer */
+.catalog-footer {
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  padding: 2rem 0;
+  margin-top: 2rem;
+}
+.catalog-footer a { color: var(--primary); }
+
+@media (max-width: 575px) {
+  .catalog-actions { flex-direction: column; }
+}
