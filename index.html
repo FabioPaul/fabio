@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fabio Areco — Desarrollador Web Full Stack especializado en ecommerce, landing pages y sistemas web.">
+  <title>Fabio Areco | Desarrollador Web Full Stack</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNavbar">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#inicio">
+        <span class="brand-icon"><i class="bi bi-code-slash"></i></span>
+        Fabio Areco
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experiencia">Experiencia</a></li>
+          <li class="nav-item"><a class="nav-link" href="#proyectos">Proyectos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-primary btn-sm px-3" href="#contacto">Solicitar presupuesto</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section id="inicio" class="hero-section">
+    <div class="container">
+      <div class="row align-items-center min-vh-100 py-5">
+        <div class="col-lg-6 order-2 order-lg-1">
+          <span class="hero-badge">Disponible para proyectos</span>
+          <h1 class="hero-title display-4 fw-bold mt-3">
+            Desarrollador Web<br>
+            <span class="text-gradient">Full Stack</span>
+          </h1>
+          <p class="hero-subtitle lead">
+            Especializado en ecommerce, landing pages y sistemas web
+          </p>
+          <p class="hero-text text-muted">
+            Ayudo a negocios a vender online, optimizar sus tiendas y construir presencia digital
+            con soluciones web prácticas, escalables y orientadas a resultados.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="https://wa.me/595985903081?text=Hola%20Fabio%2C%20quiero%20solicitar%20un%20presupuesto"
+               class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
+              <i class="bi bi-whatsapp me-2"></i>Solicitar presupuesto
+            </a>
+            <a href="#proyectos" class="btn btn-outline-light btn-lg">
+              <i class="bi bi-folder2-open me-2"></i>Ver proyectos
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 text-center mb-4 mb-lg-0">
+          <div class="hero-illustration">
+            <div class="hero-code-block">
+              <div class="code-header">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <pre class="code-content"><code><span class="code-keyword">class</span> <span class="code-class">Developer</span> {
+  <span class="code-prop">stack</span> = [<span class="code-string">'Laravel'</span>, <span class="code-string">'Rails'</span>];
+  <span class="code-prop">focus</span> = <span class="code-string">'ecommerce'</span>;
+
+  <span class="code-fn">build</span>(<span class="code-param">project</span>) {
+    <span class="code-keyword">return</span> project.<span class="code-fn">launch</span>();
+  }
+}</code></pre>
+            </div>
+            <div class="hero-float-card hero-float-card-1">
+              <i class="bi bi-cart-check text-primary"></i>
+              <span>Ecommerce</span>
+            </div>
+            <div class="hero-float-card hero-float-card-2">
+              <i class="bi bi-lightning-charge text-warning"></i>
+              <span>Performance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <a href="#servicios" aria-label="Ir a servicios">
+        <i class="bi bi-chevron-double-down"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== SERVICIOS ========== -->
+  <section id="servicios" class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="section-label">Servicios</span>
+        <h2 class="section-title">Soluciones web para tu negocio</h2>
+        <p class="section-desc text-muted mx-auto">
+          Desde la primera landing hasta una tienda online completa, con enfoque en conversión y mantenimiento.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card h-100">
+            <div class="service-icon"><i class="bi bi-window-stack"></i></div>
+            <h3>Landing Pages</h3>
+            <p>Páginas de aterrizaje optimizadas para captar leads y presentar tu negocio de forma profesional.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card h-100">
+            <div class="service-icon"><i class="bi bi-cart4"></i></div>
+            <h3>Ecommerce</h3>
+            <p>Tiendas online con catálogo, carrito, checkout y panel de administración adaptado a tu operación.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card h-100">
+            <div class="service-icon"><i class="bi bi-speedometer2"></i></div>
+            <h3>Optimización de tiendas online</h3>
+            <p>Mejora de velocidad, checkout, catálogo y experiencia de compra para aumentar conversiones.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card h-100">
+            <div class="service-icon"><i class="bi bi-plug"></i></div>
+            <h3>Integraciones web</h3>
+            <p>Conexión con pasarelas de pago, ERPs, APIs externas y herramientas de marketing.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card h-100">
+            <div class="service-icon"><i class="bi bi-tools"></i></div>
+            <h3>Mantenimiento web</h3>
+            <p>Actualizaciones, correcciones, backups y soporte continuo para que tu sitio funcione sin problemas.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card h-100">
+            <div class="service-icon"><i class="bi bi-grid-3x3-gap"></i></div>
+            <h3>Sistemas administrativos simples</h3>
+            <p>Paneles internos para gestionar productos, clientes, stock, facturación y reportes básicos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SOBRE MÍ ========== -->
+  <section id="sobre-mi" class="section-padding">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5 text-center">
+          <div class="about-avatar">
+            <div class="avatar-circle">
+              <span>FA</span>
+            </div>
+            <div class="avatar-ring"></div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <span class="section-label">Sobre mí</span>
+          <h2 class="section-title mb-4">Fabio Areco</h2>
+          <p class="about-text">
+            Programador web con experiencia en <strong>Laravel</strong>, <strong>Ruby on Rails</strong>,
+            <strong>MySQL/PostgreSQL</strong>, <strong>Bootstrap</strong> y desarrollo de ecommerce.
+          </p>
+          <p class="about-text text-muted">
+            Mi enfoque está en soluciones prácticas para negocios que quieren vender online o mejorar
+            su presencia digital. Trabajo cerca del cliente para entender el negocio y entregar
+            sistemas que realmente se usen y generen resultados.
+          </p>
+          <ul class="about-list list-unstyled mt-4">
+            <li><i class="bi bi-check-circle-fill"></i> Desarrollo orientado a negocio</li>
+            <li><i class="bi bi-check-circle-fill"></i> Código mantenible y documentado</li>
+            <li><i class="bi bi-check-circle-fill"></i> Comunicación clara en cada etapa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCIA / HABILIDADES ========== -->
+  <section id="experiencia" class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="section-label">Experiencia</span>
+        <h2 class="section-title">Tecnologías y herramientas</h2>
+        <p class="section-desc text-muted mx-auto">
+          Stack probado en proyectos reales de ecommerce, sistemas web y landing pages.
+        </p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-badge"><i class="bi bi-braces"></i> Laravel</div>
+        <div class="skill-badge"><i class="bi bi-gem"></i> Ruby on Rails</div>
+        <div class="skill-badge"><i class="bi bi-filetype-php"></i> PHP</div>
+        <div class="skill-badge"><i class="bi bi-database"></i> MySQL</div>
+        <div class="skill-badge"><i class="bi bi-database-fill-gear"></i> PostgreSQL</div>
+        <div class="skill-badge"><i class="bi bi-filetype-js"></i> JavaScript</div>
+        <div class="skill-badge"><i class="bi bi-code-square"></i> jQuery</div>
+        <div class="skill-badge"><i class="bi bi-bootstrap"></i> Bootstrap 5</div>
+        <div class="skill-badge"><i class="bi bi-filetype-html"></i> HTML/CSS</div>
+        <div class="skill-badge"><i class="bi bi-git"></i> Git</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROYECTOS ========== -->
+  <section id="proyectos" class="section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="section-label">Proyectos</span>
+        <h2 class="section-title">Trabajo reciente</h2>
+        <p class="section-desc text-muted mx-auto">
+          Algunos ejemplos de soluciones desarrolladas para distintos tipos de negocio.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-6">
+          <article class="project-card h-100">
+            <div class="project-image project-image-1">
+              <i class="bi bi-shop"></i>
+            </div>
+            <div class="project-body">
+              <h3>Ecommerce con gestión avanzada</h3>
+              <p>
+                Tienda online con gestión de productos, stock, variaciones de atributos
+                (talle, color) y sistema de promociones y descuentos.
+              </p>
+              <div class="project-tags">
+                <span>Laravel</span>
+                <span>MySQL</span>
+                <span>Bootstrap</span>
+              </div>
+              <a href="#contacto" class="btn btn-outline-primary btn-sm mt-3">
+                Consultar similar <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+          <article class="project-card h-100">
+            <div class="project-image project-image-2">
+              <i class="bi bi-building"></i>
+            </div>
+            <div class="project-body">
+              <h3>Sistema inmobiliario</h3>
+              <p>
+                Plataforma para gestión de lotes, plan de cuotas, seguimiento de pagos
+                y facturación integrada para desarrolladora inmobiliaria.
+              </p>
+              <div class="project-tags">
+                <span>Ruby on Rails</span>
+                <span>PostgreSQL</span>
+                <span>JavaScript</span>
+              </div>
+              <a href="#contacto" class="btn btn-outline-primary btn-sm mt-3">
+                Consultar similar <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+          <article class="project-card h-100">
+            <div class="project-image project-image-3">
+              <i class="bi bi-megaphone"></i>
+            </div>
+            <div class="project-body">
+              <h3>Landing page para negocio local</h3>
+              <p>
+                Página de presentación con formulario de contacto, WhatsApp integrado
+                y diseño mobile-first para negocio de servicios locales.
+              </p>
+              <div class="project-tags">
+                <span>HTML/CSS</span>
+                <span>Bootstrap 5</span>
+                <span>JavaScript</span>
+              </div>
+              <a href="#contacto" class="btn btn-outline-primary btn-sm mt-3">
+                Ver más <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+          <article class="project-card h-100">
+            <div class="project-image project-image-4">
+              <i class="bi bi-graph-up-arrow"></i>
+            </div>
+            <div class="project-body">
+              <h3>Optimización de checkout y catálogo</h3>
+              <p>
+                Mejora de rendimiento, simplificación del flujo de compra y reorganización
+                del catálogo para reducir abandono de carrito.
+              </p>
+              <div class="project-tags">
+                <span>PHP</span>
+                <span>jQuery</span>
+                <span>MySQL</span>
+              </div>
+              <a href="#contacto" class="btn btn-outline-primary btn-sm mt-3">
+                Consultar similar <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROCESO DE TRABAJO ========== -->
+  <section id="proceso" class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="section-label">Proceso</span>
+        <h2 class="section-title">Cómo trabajo</h2>
+        <p class="section-desc text-muted mx-auto">
+          Un flujo claro y transparente desde el primer contacto hasta la entrega.
+        </p>
+      </div>
+
+      <div class="process-timeline">
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <h3>Relevamiento</h3>
+          <p>Entiendo tu negocio, objetivos, público y requerimientos técnicos.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <h3>Propuesta y presupuesto</h3>
+          <p>Te envío alcance, plazos y costo detallado sin sorpresas.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <h3>Diseño / desarrollo</h3>
+          <p>Construyo la solución con avances periódicos y feedback continuo.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <h3>Entrega</h3>
+          <p>Publicación, pruebas finales y capacitación básica de uso.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">5</div>
+          <h3>Soporte opcional</h3>
+          <p>Mantenimiento, mejoras y acompañamiento post-lanzamiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section id="cta" class="cta-section">
+    <div class="container text-center">
+      <h2 class="cta-title">¿Tenés un negocio y querés vender online o mejorar tu web?</h2>
+      <p class="cta-text">Hablemos de tu proyecto. Presupuesto sin compromiso.</p>
+      <a href="https://wa.me/595985903081?text=Hola%20Fabio%2C%20tengo%20un%20negocio%20y%20quiero%20mejorar%20mi%20web"
+         class="btn btn-light btn-lg px-5" target="_blank" rel="noopener noreferrer">
+        <i class="bi bi-whatsapp me-2"></i>Escribime por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== CONTACTO ========== -->
+  <section id="contacto" class="section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="section-label">Contacto</span>
+        <h2 class="section-title">Contame sobre tu proyecto</h2>
+        <p class="section-desc text-muted mx-auto">
+          Completá el formulario o escribime directamente. Respondo en menos de 24 horas.
+        </p>
+      </div>
+
+      <div class="row g-5">
+        <div class="col-lg-7">
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="col-md-6">
+                <label for="contacto" class="form-label">Email o teléfono</label>
+                <input type="text" class="form-control" id="contactoInput" name="contacto"
+                       placeholder="email@ejemplo.com o +54 9..." required>
+              </div>
+              <div class="col-12">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" rows="5"
+                          placeholder="Contame qué necesitás..." required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="bi bi-send me-2"></i>Enviar mensaje
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon"><i class="bi bi-whatsapp"></i></div>
+              <div>
+                <h4>WhatsApp</h4>
+                <a href="https://wa.me/595985903081" target="_blank" rel="noopener noreferrer">
+                  +595 985 903081
+                </a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="bi bi-envelope"></i></div>
+              <div>
+                <h4>Email</h4>
+                <a href="mailto:fabio@ejemplo.com">fabio@ejemplo.com</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="bi bi-linkedin"></i></div>
+              <div>
+                <h4>LinkedIn</h4>
+                <a href="https://linkedin.com/in/fabioareco" target="_blank" rel="noopener noreferrer">
+                  linkedin.com/in/fabioareco
+                </a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="bi bi-github"></i></div>
+              <div>
+                <h4>GitHub</h4>
+                <a href="https://github.com/fabioareco" target="_blank" rel="noopener noreferrer">
+                  github.com/fabioareco
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h5 class="footer-brand">
+            <i class="bi bi-code-slash me-2"></i>Fabio Areco
+          </h5>
+          <p class="footer-text">
+            Desarrollador Web Full Stack — ecommerce, landing pages y sistemas web.
+          </p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="footer-heading">Links rápidos</h6>
+          <ul class="footer-links list-unstyled">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h6 class="footer-heading">Redes</h6>
+          <div class="footer-social">
+            <a href="https://wa.me/595985903081" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+            <a href="https://linkedin.com/in/fabioareco" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com/fabioareco" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <i class="bi bi-github"></i>
+            </a>
+            <a href="mailto:fabio@ejemplo.com" aria-label="Email">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <p class="footer-copy text-center mb-0">
+        &copy; <span id="currentYear"></span> Fabio Areco. Todos los derechos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Botón flotante WhatsApp -->
+  <a href="https://wa.me/595985903081?text=Hola%20Fabio%2C%20quiero%20consultarte%20por%20un%20proyecto"
+     class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- JS personalizado -->
+  <script src="js/main.js"></script>
+</body>
+</html>
