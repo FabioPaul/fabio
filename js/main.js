@@ -64,7 +64,7 @@
 
   /* --- Animaciones fade-in al scroll --- */
   const animatedElements = document.querySelectorAll(
-    '.service-card, .project-card, .demo-card, .process-step, .skill-badge, .about-avatar, .contact-form, .contact-info'
+    '.service-card, .pricing-card, .project-card, .demo-card, .process-step, .skill-badge, .about-avatar, .contact-form, .contact-info'
   );
 
   animatedElements.forEach(function (el) {
